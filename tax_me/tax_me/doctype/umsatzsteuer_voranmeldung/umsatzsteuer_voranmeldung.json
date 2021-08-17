@@ -1,0 +1,107 @@
+{
+ "autoname": "USTVA-.#####",
+ "creation": "2021-08-13 22:20:58.619092",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "von",
+  "column_break_2",
+  "bis",
+  "section_break_4",
+  "status",
+  "column_break_6",
+  "berechnen",
+  "ergebnisse_section",
+  "summe_netto",
+  "summe_umsatzsteuer",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "von",
+   "fieldtype": "Date",
+   "label": "von"
+  },
+  {
+   "fieldname": "bis",
+   "fieldtype": "Date",
+   "label": "bis"
+  },
+  {
+   "fieldname": "summe_netto",
+   "fieldtype": "Float",
+   "label": "Summe Netto",
+   "read_only": 1
+  },
+  {
+   "fieldname": "summe_umsatzsteuer",
+   "fieldtype": "Float",
+   "label": "Summe Umsatzsteuer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "new\ndraft\ncompleted",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ergebnisse_section",
+   "fieldtype": "Section Break",
+   "label": "Ergebnisse"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "berechnen",
+   "fieldtype": "Button",
+   "label": "Berechnen",
+   "options": "berechnen"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Umsatzsteuer Voranmeldung",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2021-08-13 23:07:31.477121",
+ "modified_by": "Administrator",
+ "module": "Tax Me",
+ "name": "Umsatzsteuer Voranmeldung",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
