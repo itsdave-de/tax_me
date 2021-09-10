@@ -15,6 +15,10 @@
   "ergebnisse_section",
   "summe_netto",
   "summe_umsatzsteuer",
+  "column_break_11",
+  "summe_netto_pi",
+  "summe_steuern_pi",
+  "info_section",
   "amended_from"
  ],
  "fields": [
@@ -78,10 +82,29 @@
    "options": "Umsatzsteuer Voranmeldung",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "summe_netto_pi",
+   "fieldtype": "Float",
+   "label": "Summe Einkauf Netto"
+  },
+  {
+   "fieldname": "summe_steuern_pi",
+   "fieldtype": "Float",
+   "label": "Summe Einkauf Ust"
+  },
+  {
+   "fieldname": "info_section",
+   "fieldtype": "Section Break",
+   "label": "Info"
   }
  ],
  "is_submittable": 1,
- "modified": "2021-08-13 23:07:31.477121",
+ "modified": "2021-08-18 11:14:48.979461",
  "modified_by": "Administrator",
  "module": "Tax Me",
  "name": "Umsatzsteuer Voranmeldung",

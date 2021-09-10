@@ -39,8 +39,15 @@ class UmsatzsteuerVoranmeldung(Document):
 		#Eingangsbelege verarbeiten
 
 		pi_list = self.get_eingangsrechnungen_from_inoxision(settings)
+
+		summe_netto_pi = 0
+		summe_steuern_pi = 0
 		for pi in pi_list:
-			print(str(pi["BelegDatum"]) + " - " + pi["BelegNummer"])
+			summe_netto_pi += pi["NettoBeleg"]
+			summe_steuern_pi += pi["Ust"]
+		
+		self.summe_netto_pi = summe_netto_pi
+		self.summe_steuern_pi = summe_steuern_pi
 
 		self.status = "draft"
 		self.save()
@@ -108,9 +115,18 @@ class UmsatzsteuerVoranmeldung(Document):
 					try:
 						#Versuch, dt mit 2-stelligem Jahr zu parsen
 						belegdatum_dt =  dt.strptime(row["BelegDatum"], "%d.%m.%y")
+						print("2 stellen bei: " + row["BelegNummer"] + " " + row["AdressName"] + " " + row["BelegDatum"])
 					except:
 						frappe.throw("Datum in Beleg kann nicht interpretiert werden. Bitte den Beleg in Inoxision korrigieren:<br>" + str(row))
-			#print(belegdatum_dt)
+			
+			#Checks auf plausibles Zahlenformat
+			row["NettoBeleg"] = self.parse_string_to_float(row["NettoBeleg"])
+			if (isinstance(row["NettoBeleg"], bool)) and (row["NettoBeleg"] == False):
+				frappe.msgprint(str(row["NettoBeleg"]) + " kann nicht als Zahl interpretiert werden:" + str(row))
+						
+			row["Ust"] = self.parse_string_to_float(row["Ust"])
+			if (isinstance(row["Ust"], bool)) and (row["Ust"] == False):
+				frappe.msgprint(str(row["Ust"]) + " kann nicht als Zahl interpretiert werden:" + str(row))
 
 			#Datum Prüfen, wir geben nur Belege innerhalb des gewählten Zeitraums zurück
 			if belegdatum_dt >= dt.fromisoformat(self.von) and belegdatum_dt <= dt.fromisoformat(self.bis):
@@ -119,6 +135,27 @@ class UmsatzsteuerVoranmeldung(Document):
 			
 		return return_list
 
+	def parse_string_to_float(self, input_string):
+		clean_string = str(input_string)
 
+		all_regex = "^\d+$"
+		de_regex = "^\d+.\d+,\d{2}|\d+,\d{2}$"
+		en_regex = "^\d+,\d+.\d{2}|\d+.\d{2}$"
 
+		output_float = False
 
+		if re.match(all_regex, clean_string):
+			output_float = float(clean_string)
+
+		elif re.match(de_regex, clean_string):
+			#tausender Trennzeichen entfernen
+			clean_string = clean_string.replace(".","")
+			#Komma durch Punkt ersetzen
+			clean_string = clean_string.replace(",",".")
+			output_float = float(clean_string)
+		elif re.match(en_regex, clean_string):
+			#tausender Trennzeichen entfernen
+			clean_string = clean_string.replace(",","")
+			output_float = float(clean_string)
+
+		return output_float
