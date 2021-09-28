@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "USTVA-.#####",
  "creation": "2021-08-13 22:20:58.619092",
  "doctype": "DocType",
@@ -9,6 +10,8 @@
   "column_break_2",
   "bis",
   "section_break_4",
+  "csv_datei_erzeugen",
+  "column_break_8",
   "status",
   "column_break_6",
   "berechnen",
@@ -78,10 +81,22 @@
    "options": "Umsatzsteuer Voranmeldung",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "csv_datei_erzeugen",
+   "fieldtype": "Button",
+   "label": "Daten generieren",
+   "options": "daten_generieren"
   }
  ],
+ "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "modified": "2021-08-13 23:07:31.477121",
+ "links": [],
+ "modified": "2021-09-28 12:47:51.448904",
  "modified_by": "Administrator",
  "module": "Tax Me",
  "name": "Umsatzsteuer Voranmeldung",
