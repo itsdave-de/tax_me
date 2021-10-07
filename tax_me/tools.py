@@ -3,6 +3,7 @@ from frappe.desk.form.linked_with import get_linked_docs, get_linked_doctypes
 
 @frappe.whitelist()
 def create_missing_debitor_accounts():
+
     settings = frappe.get_single("Tax Me Einstellungen")
     customers = get_customers_without_debitor_acc(settings)
     print(customers)
@@ -12,7 +13,6 @@ def create_missing_debitor_accounts():
                 create_and_assign_debitor_account(settings, c["name"])
         else:
             create_and_assign_debitor_account(settings, c["name"])
-
 
 
 def get_next_debitor_acc_no(settings):
@@ -78,9 +78,6 @@ def create_and_assign_debitor_account(settings, customer):
         })
         cust_doc.append("accounts", pa_doc)
     cust_doc.save()
-    
-
-
 
 def get_customers_without_debitor_acc(settings):
     global_settings_doc = frappe.get_single("Global Defaults")
@@ -95,7 +92,6 @@ def get_customers_without_debitor_acc(settings):
     for customer in customer_list:
         cust_doc = frappe.get_doc("Customer", customer)
         cust_name_str = str(cust_doc.name)
-        cust_int = int(cust_name_str.split("-")[1])
         if cust_doc.accounts:
             for pa in cust_doc.accounts:
                 if pa.company == global_settings_doc.default_company:
