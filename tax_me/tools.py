@@ -21,6 +21,8 @@ def get_next_debitor_acc_no(settings):
     }
     fields = ["name", "account_number"]
     acc_list = frappe.get_all("Account", filters=filters, fields=fields)
+    if not acc_list:
+        return settings.no_series_start
     max_acc_no = settings.no_series_start
     for acc in acc_list:
         if acc["account_number"].isdigit():
