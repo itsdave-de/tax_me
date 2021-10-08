@@ -11,8 +11,10 @@ def create_missing_debitor_accounts():
         if c["acc_no"]:
             if not try_assign_existent_account(c):
                 create_and_assign_debitor_account(settings, c["name"])
+                frappe.db.commit()
         else:
             create_and_assign_debitor_account(settings, c["name"])
+            frappe.db.commit()
 
 
 def get_next_debitor_acc_no(settings):
