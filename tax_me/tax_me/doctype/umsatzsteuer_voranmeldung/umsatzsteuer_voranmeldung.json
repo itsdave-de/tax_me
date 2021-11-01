@@ -94,7 +94,7 @@
    "fieldname": "csv_datei_erzeugen",
    "fieldtype": "Button",
    "label": "Daten generieren",
-   "options": "daten_generieren"
+   "options": "daten_generieren",
    "fieldname": "column_break_11",
    "fieldtype": "Column Break"
   },
