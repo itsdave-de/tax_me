@@ -87,7 +87,6 @@
    "read_only": 1
   },
   {
-<<<<<<< HEAD
    "fieldname": "column_break_8",
    "fieldtype": "Section Break"
   },
@@ -96,7 +95,6 @@
    "fieldtype": "Button",
    "label": "Daten generieren",
    "options": "daten_generieren"
-=======
    "fieldname": "column_break_11",
    "fieldtype": "Column Break"
   },
