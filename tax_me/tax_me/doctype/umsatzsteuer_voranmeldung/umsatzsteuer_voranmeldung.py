@@ -30,12 +30,12 @@ class UmsatzsteuerVoranmeldung(Document):
 				"docstatus": 1,
 				"posting_date": ["between", [self.von, self.bis]]
 				},
-			fields = ["name", "posting_date", "total", "total_taxes_and_charges"]
+			fields = ["name", "posting_date", "total", "net_total", "total_taxes_and_charges"]
 			)
 		summe_netto = 0
 		summe_steuern = 0
 		for si in si_list:
-			summe_netto += si["total"]
+			summe_netto += si["net_total"]
 			summe_steuern += si["total_taxes_and_charges"]
 		self.summe_netto = summe_netto
 		self.summe_umsatzsteuer = summe_steuern
