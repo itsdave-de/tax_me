@@ -31,6 +31,7 @@ def generate_datev_buchungsstapel(company: str, from_date: str, to_date: str,
             "base_net_total",
             "base_total_taxes_and_charges",
             "base_grand_total",
+            "custom_datev_account", 
         ],
         order_by="posting_date asc, name asc",
         limit_page_length=10000,
@@ -93,13 +94,31 @@ def generate_datev_buchungsstapel(company: str, from_date: str, to_date: str,
         supplier_country = sup.get("country")
         supplier_vat_id = sup.get("tax_id")
 
-        amount = float(inv.get("base_grand_total") or 0)
+        amount_raw = float(inv.get("base_grand_total") or 0)
 
-        # Platzhalter-Logik – später mit Steuerberater konkretisieren:
-        soll_haben = "H"           # z. B. Haben für Kreditor
-        konto = "1600"             # Beispiel: Kreditor
-        gegenkonto = "3400"        # Beispiel: Wareneingang
+        # Soll/Haben-Logik nach DATEV:
+        # positive Rechnung → Haben
+        # negative Rechnung (Gutschrift) → Soll
+        if amount_raw >= 0:
+            soll_haben = "H"
+            amount = amount_raw
+        else:
+            soll_haben = "S"
+            amount = abs(amount_raw)
+
+        konto = "1600"             # Kreditorenkonto SKR04
+
+        # Standard-Gegenkonto: Wareneingang 19% Vorsteuer (SKR04: 5400)
+        standard_gegenkonto = "5400"
+
+        # Custom-Konto aus der Purchase Invoice (Data-Feld oder später Link)
+        datev_account = (inv.get("custom_datev_account") or "").strip()
+
+        # Wenn custom gesetzt → nehmen, sonst Default 5400
+        gegenkonto = datev_account if datev_account else standard_gegenkonto
+
         bu_key = ""                # später z. B. 94/95 etc.
+
 
         belegdatum = inv.get("bill_date") or inv.get("posting_date")
         belegdatum_str = belegdatum.strftime("%d%m%Y") if belegdatum else ""
