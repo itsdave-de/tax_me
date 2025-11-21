@@ -117,7 +117,12 @@ def generate_datev_buchungsstapel(company: str, from_date: str, to_date: str,
         # Wenn custom gesetzt → nehmen, sonst Default 5400
         gegenkonto = datev_account if datev_account else standard_gegenkonto
 
-        bu_key = ""                # später z. B. 94/95 etc.
+        # Steuerbetrag
+        steuer = float(inv.get("base_total_taxes_and_charges") or 0)
+
+        # BU-Schlüssel: "9" wenn Steuer > 0, sonst leer
+        bu_key = "9" if steuer != 0 else ""
+
 
 
         belegdatum = inv.get("bill_date") or inv.get("posting_date")
